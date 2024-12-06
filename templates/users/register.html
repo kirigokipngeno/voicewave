@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    {% load static %}
+
+    <!-- CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+<body style="background-image: url('{% static 'images/rg.jpg' %}'); background-size: cover; background-position: center;">
+
+<section class="vh-100 d-flex align-items-center">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-2">
+                        <h2 class="text-center mb-2">Create Account</h2>
+
+                        <form action="{% url 'register' %}" method="post">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+
+                            <div class="form-check d-flex justify-content-center mb-2">
+                                <input class="form-check-input me-1" type="checkbox" id="terms" />
+                                <label class="form-check-label" for="terms">Agree to <a href="#!" class="text-body"><u>Terms of service</u></a></label>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success btn-sm">Register</button>
+                            </div>
+
+                            <p class="text-center text-muted mt-2 mb-0">Already have an account? <a href="{% url 'login' %}" class="fw-bold text-body"><u>Login here</u></a></p>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+</body>
+</html>

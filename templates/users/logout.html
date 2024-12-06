@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+</head>
+<body style="background-image: url('{% static 'image/om.jpg' %}'); background-size: cover; background-position: center;">
+
+<div class="container mt-5">
+  <div class="card-group">
+    <div class="card">
+      <img class="card-img-top" src="{% static 'images/om1.jpg' %}" alt="Card image cap" style="object-fit: cover; height: 200px;">
+      <div class="card-body">
+        <h5 class="card-title">Empowers Citizen Participation</h5>
+        <p class="card-text">Voting allows individuals to have a say in the decisions that shape their lives, such as policies, leadership, and community development.
+</p>
+        <p class="card-text"><small class="text-muted">responsibility.</small></p>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="{% static 'images/om2.jpg' %}" alt="Card image cap" style="object-fit: cover; height: 200px;">
+      <div class="card-body">
+        <h5 class="card-title">Strengthens Democracy</h5>
+        <p class="card-text">A high voter turnout enhances the legitimacy of elected representatives and the policies they implement.</p>
+        <p class="card-text"><small class="text-muted">decision making</small></p>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="{% static 'images/om3.jpg' %}" alt="Card image cap" style="object-fit: cover; height: 200px;">
+      <div class="card-body">
+        <h5 class="card-title">Drives Social Change</h5>
+        <p class="card-text">Voting enables citizens to support candidates and policies that align with their vision for the future, influencing progress on issues like education, healthcare, and climate change</p>
+        <p class="card-text"><small class="text-muted">society</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+
+<div class="content-section py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-10 col-xs-12">
+            <div class="card rounded-0 shadow">
+                <div class="card-body">
+                    <div class="container">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4 text-center">Log In</legend>
+                                <div class="form-group">
+                                    <label for="username" class="control-label">Username</label>
+                                    <input type="text" class="form-control form-control-lg rounded-0" name="username" required value="{% if form.username.value %}{{form.username.value}}{% endif %}"> {% if form.username.errors %}
+                                    <div class="text-danger"><i>{{form.username.errors}}</i></div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="control-label">Password</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0" name="password" required> {% if form.password.errors %}
+                                    <div class="text-danger"><i>{{form.password.errors}}</i></div>
+                                    {% endif %}
+                                </div>
+                                {% if form.non_field_errors %}
+                                <div class="alert alert-danger rounded">{{form.non_field_errors}}</div>
+                                {% endif %}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-block rounded-pill btn-primary btn-lg" type="submit">Login</button>
+                            </div>
+                        </form>
+                        <div class="text-right pt-1">
+                            <small class="text-muted">
+                            Don't have an Account? <a class="ml-2" href="{% url 'register' %}">Signup here</a>
+                        </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

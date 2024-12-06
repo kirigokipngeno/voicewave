@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%load static%}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+</head>
+<body style="
+    background-image: url('{% static 'images/om.jpg' %}');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Makes the background image stay in place during scrolling */
+    filter: brightness(0.9); /* Slightly darken the image for better contrast with text */
+">
+
+<div class="card text-center rounded-0" style="background-image: url('{% static 'image/om.jpg' %}'); background-size: cover; background-position: center;">
+    <div class="card-body">
+        <h1 class="mb-3 pb-3 border-bottom border-dark">Welcome to I.E.B.C, {{ request.user.first_name }} {{ request.user.last_name }}!</h1>
+        <p class="pb-3">
+
+We’re thrilled to have you join our platform, where your voice truly matters. Here, you can participate in shaping decisions, sharing opinions, and contributing to meaningful change through voting.
+
+Whether it’s about deciding on policies, sharing perspectives, or helping steer a community towards its goals, your vote is powerful—and we’re here to make it count.
+
+Take a moment to explore the questions for polling, and let’s make your voice heard.
+
+Thank you for being part of this journey. Your participation drives progress!
+
+Let’s get started!.</p>
+        <hr/>
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8 col-xs-12">
+                <a class="btn btn-info btn-block rounded-pill btn-lg" href="{% url 'polls:index' %}">Explore Questions for Polling</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock %}

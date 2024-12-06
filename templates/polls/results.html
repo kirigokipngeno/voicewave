@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div class="mb-3">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark-blue">
+            <tr>
+                <th scope="col">Choice</th>
+                <th scope="col">Votes</th>
+                <th scope="col">Percentage</th>
+            </tr>
+        </thead>
+        <tbody id="resultsTable">
+            <!-- Table rows will be dynamically populated -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var objId = "{{ question.id }}";
+    var dataURL = `/polls/resultsdata/${objId}/`;
+
+    $.ajax({
+        method: "GET",
+        url: dataURL,
+        success: function(response) {
+            var totalVotes = 0;
+            var resultsHTML = "";
+
+            // Calculate total votes
+            for (var i in response) {
+                totalVotes += Object.values(response[i])[0];
+            }
+
+            // Generate table rows
+            for (var i in response) {
+                var choice = Object.keys(response[i])[0];
+                var votes = Object.values(response[i])[0];
+                var percentage = totalVotes > 0 ? ((votes / totalVotes) * 100).toFixed(2) + "%" : "0%";
+
+                resultsHTML += `
+                    <tr>
+                        <td>${choice}</td>
+                        <td>${votes}</td>
+                        <td>${percentage}</td>
+                    </tr>`;
+            }
+
+            // Append rows to the table body
+            $("#resultsTable").html(resultsHTML);
+        },
+        error: function(error) {
+            console.error("Error fetching data:", error);
+        }
+    });
+</script>
+
+{% endblock %}
