@@ -1,46 +1,34 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    {% load static %}
+<section class="d-flex align-items-center" style="min-height: 100vh; background: url('{% static "th.jpg" %}') no-repeat center center/cover;">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card shadow-sm" style="border-radius: 15px; background-color: #f5f5dc; border: none;"> <!-- Cream Color -->
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <img src="{% static 'images/th1.png' %}" alt="Logo" class="img-fluid" style="max-width: 250px;"> <!-- Increased max-width -->
+                        </div>
 
-    <!-- CSS Files -->
-    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
-</head>
-<body style="background-image: url('{% static 'images/rg.jpg' %}'); background-size: cover; background-position: center;">
-
-<section class="vh-100 d-flex align-items-center">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6">
-                <div class="card" style="border-radius: 15px;">
-                    <div class="card-body p-2">
-                        <h2 class="text-center mb-2">Create Account</h2>
-
-                        <form action="{% url 'register' %}" method="post">
+                        <form action="{% url 'users:register' %}" method="post">
                             {% csrf_token %}
-                            {{ form | crispy }}
+                            {{ form|crispy }}
 
-                            <div class="form-check d-flex justify-content-center mb-2">
-                                <input class="form-check-input me-1" type="checkbox" id="terms" />
-                                <label class="form-check-label" for="terms">Agree to <a href="#!" class="text-body"><u>Terms of service</u></a></label>
+                            <div class="form-check d-flex justify-content-center mb-4">
+                                <input class="form-check-input me-2" type="checkbox" id="terms" required />
+                                <label class="form-check-label ms-2" for="terms">
+                                    Agree to <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                </label>
                             </div>
 
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-success btn-sm">Register</button>
+                            <div class="d-flex justify-content-center mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg" style="padding: 10px 20px;">Register</button> <!-- Blue Button -->
                             </div>
 
-                            <p class="text-center text-muted mt-2 mb-0">Already have an account? <a href="{% url 'login' %}" class="fw-bold text-body"><u>Login here</u></a></p>
-
+                            <p class="text-center text-muted mb-0">Already have an account? <a href="{% url 'users:login' %}" class="fw-bold text-body"><u>Login here</u></a></p>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -48,5 +36,3 @@
     </div>
 </section>
 {% endblock %}
-</body>
-</html>

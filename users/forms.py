@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import ContactInfo
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from .models import Profile
 
@@ -40,3 +41,7 @@ class UpdatePasswords(PasswordChangeForm):
     class Meta:
         model = User
         fields = ('old_password','new_password1', 'new_password2')
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactInfo
+        fields = ['name', 'email', 'number', 'mess']

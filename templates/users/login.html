@@ -6,7 +6,7 @@
             <div class="card rounded-0 shadow">
                 <div class="card-body">
                     <div class="container">
-                        <form action="" method="POST">
+                        <form method="post" action="{% url 'users:login' %}">
                             {% csrf_token %}
 
                             <fieldset class="form-group">
@@ -33,7 +33,7 @@
                         </form>
                         <div class="text-right pt-1">
                             <small class="text-muted">
-                            Don't have an Account? <a class="ml-2" href="{% url 'register' %}">Signup here</a>
+                            Don't have an Account? <a class="ml-2" href="{% url 'users:register' %}">Signup here</a>
                         </small>
                         </div>
                     </div>

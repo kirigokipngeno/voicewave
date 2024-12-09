@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.utils import timezone
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)   
@@ -23,7 +25,13 @@ class ContactInfo(models.Model):
     email = models.CharField(max_length=122)
     number = models.CharField(max_length=15)
     mess = models.TextField()
-    date = models.DateField()
+    date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.name
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    is_open = models.BooleanField(default=True)  # Field to track if voting is allowed
+
+    def __str__(self):
+        return self.question_text

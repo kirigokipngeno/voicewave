@@ -6,90 +6,116 @@
     <title>Admin Dashboard</title>
     {% load static %}
     <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Font Awesome CDN -->
+    <style>
+        .nav-link-visible {
+            color: white !important; /* Make the links white */
+        }
+        .badge-icon {
+            position: relative;
+            top: -2px; /* Adjust to align the icon */
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <a class="navbar-brand" href="#">
+                {% if user.is_authenticated %}
+                    Welcome, {{ user.username }} <!-- Display the logged-in user's name -->
+                {% else %}
+                    Welcome, I.E.B.C Staff
+                {% endif %}
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacts</a>
-                    </li>
+                    <!-- Additional nav items can be added here -->
                 </ul>
-                <span class="navbar-text">
-                    Admin Area
-                </span>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-visible" href="{% url 'users:contact_list' %}">
+                            View Contacts
+                            {% if new_contacts_count > 0 %}
+                            <span class="badge bg-danger">
+                                <i class="fas fa-envelope badge-icon"></i> <!-- Notification icon -->
+                                {{ new_contacts_count }}
+                            </span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-visible" href="{% url 'polls:admin_results' %}">View Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-visible" href="{% url 'users:logout' %}">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Search Bar -->
     <div class="container mt-5">
-        <h1>Admin Dashboard</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for question in questions %}
-                <tr>
-                    <td>{{ question.question_text }}</td>
-                    <td>{{ question.is_open|yesno:"Open,Closed" }}</td>
-                    <td>
-                        {% if question.is_open %}
-                        <form action="{% url 'polls:close_election' question.id %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" value="Close Election" class="btn btn-danger">
-                        </form>
-                        {% else %}
-                        <form action="{% url 'polls:continue_election' question.id %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" value="Continue Election" class="btn btn-success">
-                        </form>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <form method="get" action="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search..." name="search" value="{{ search_query }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
 
-        <h2>Contacts</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Number</th>
-                    <th>Message</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for contact in contacts %}
-                <tr>
-                    <td>{{ contact.name }}</td>
-                    <td>{{ contact.email }}</td>
-                    <td>{{ contact.number }}</td>
-                    <td>{{ contact.mess }}</td>
-                    <td>{{ contact.date }}</td>
-                </tr>
+        <!-- Main Content -->
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for question in questions %}
+                    <tr>
+                        <td>{{ question.question_text }}</td>
+                        <td>{{ question.is_open|yesno:"Open,Closed" }}</td>
+                        <td>
+                            {% if question.is_open %}
+                            <form action="{% url 'polls:close_voting' question.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Close Voting" class="btn btn-danger">
+                            </form>
+                            {% else %}
+                            <form action="{% url 'polls:continue_voting' question.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Continue Voting" class="btn btn-success">
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination for Questions -->
+        <nav aria-label="Question pagination">
+            <ul class="pagination">
+                {% for page_num in questions.paginator.page_range %}
+                <li class="page-item {% if questions.number == page_num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page_num }}</a>
+                </li>
                 {% endfor %}
-            </tbody>
-        </table>
+            </ul>
+        </nav>
     </div>
+
     <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Results</title>
+    {% load static %}
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #007bff; /* Bootstrap primary blue color */
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .top-button {
+            margin-bottom: 20px; /* Space between button and content */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <a href="{% url 'polls:admin_dashboard' %}" class="btn btn-secondary top-button">Back to Dashboard</a>
+
+        {% for question in questions %}
+        <div class="mb-4">
+            <h2>{{ question.question_text }}</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Choice</th>
+                            <th>Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for choice in question.choice_set.all %}
+                        <tr>
+                            <td>{{ choice.choice_text }}</td>
+                            <td>{{ choice.votes }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

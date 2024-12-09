@@ -17,12 +17,19 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
+from polls.views import AdminLoginView, AdminLogoutView
 
 urlpatterns = [
     path('', include('pages.urls')),
     path('polls/', include('polls.urls')),
+    
     path('admin/', admin.site.urls),
-    path('', include('users.urls')),
+    path('polls/', include('polls.urls', namespace='polls')),
+    path('', include('users.urls',namespace='users')),
+    path('admin_login/', AdminLoginView.as_view(), name='admin_login'), # Ensure this line is included
+    path('admin_logout/', AdminLogoutView.as_view(), name='admin_logout'),
 ]
 
 if settings.DEBUG:

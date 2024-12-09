@@ -1,39 +1,42 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
-
-<div class="content-section">
-    <div class="media bg-white px-3 py-3 rounded-0 mb-3">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" style="width: 100px; height: 100px;">
-        <div class="media-body my-2 mx-2">
-            <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }} <span><small>({{ user.username }})</small></span></h2>
-            <p class="text-secondary">{{ user.email }}</p>
-        </div>
-    </div>
-
-    <div class="card border shadow rounded-0">
-        <div class="card-header">
-            <div class="card-title h5 mb-0 font-weight-bold px-2">Update Profile Info</div>
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
-                <!-- Don't Forget To Add enctype="multipart/form-data". If We Leave This, Then It Won't Save Data In The Background -->
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-3">Profile Info</legend>
-
-                        {{ u_form | crispy }} {{ p_form | crispy }}
-
-                    </fieldset>
-                    <div class="form-group text-center">
-                        <button class="btn btn-primary rounded-pill" type="submit">Update</button>
+<section class="d-flex align-items-center" style="min-height: 100vh; background: url('{% static "th.jpg" %}') no-repeat center center/cover;">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="media bg-white px-3 py-3 rounded-0 mb-3 shadow-sm" style="border-radius: 15px;">
+                    <img class="rounded-circle account-img border" src="{{ user.profile.image.url }}" style="width: 100px; height: 100px; border: 3px solid #ddd;">
+                    <div class="media-body my-2 mx-2">
+                        <h2 class="account-heading text-dark">{{ user.first_name }} {{ user.last_name }} <span><small>({{ user.username }})</small></span></h2>
+                        <p class="text-secondary">{{ user.email }}</p>
                     </div>
-                </form>
+                </div>
+
+                <div class="card border shadow rounded-0" style="border-radius: 15px; background-color: #f5f5dc;">
+                    <div class="card-header bg-primary text-white" style="border-radius: 15px 15px 0 0;">
+                        <div class="card-title h5 mb-0 font-weight-bold px-2">Update Profile Info</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <fieldset class="form-group">
+                                    <legend class="border-bottom mb-3">Profile Info</legend>
+                                    {{ u_form | crispy }}
+                                    {{ p_form | crispy }}
+                                </fieldset>
+                                <div class="form-group text-center">
+                                    <button class="btn btn-primary rounded-pill" type="submit" style="padding: 10px 20px; font-size: 16px;">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>
 {% endblock %}

@@ -55,10 +55,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'pollster.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -74,7 +74,9 @@ TEMPLATES = [
         },
     },
 ]
-
+LOGIN_URL = 'admin_login'  # URL for login page
+LOGIN_REDIRECT_URL = 'polls:admin_dashboard'  # Redirects to the admin dashboard after login
+LOGOUT_REDIRECT_URL = 'index'  # Redirects to the login page after logout
 WSGI_APPLICATION = 'pollster.wsgi.application'
 
 
